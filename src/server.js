@@ -22,6 +22,7 @@ const ALLOWED_ORIGINS = [
     // điền domain thật của bạn tại đây khi có
     "http://localhost:5173",
     "http://127.0.0.1:5500",
+    "https://mygame.vercel.app",
 ];
 
 // Cho phép mở file HTML trực tiếp trong DEV (Origin = null)
