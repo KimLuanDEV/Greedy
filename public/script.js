@@ -1,5 +1,5 @@
 ﻿
-const API_BASE = window.API_BASE_OVERRIDE || "https://greedy-king.onrender.com"; // đổi sang domain backend khi deploy
+const API_BASE = "https://greedy-king.onrender.com"; 
 let ID_TOKEN = null;
 
 async function api(path, method="GET", body=null, auth=true) {
