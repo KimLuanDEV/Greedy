@@ -16,7 +16,29 @@ const PORT = process.env.PORT || 8080;
 
 // ===== Middlewares chung =====
 app.use(helmet());
-app.use(cors({ origin: true, credentials: true })); // tạm mở; khi deploy có thể chỉ định domain frontend
+import cors from "cors";
+
+const ALLOWED_ORIGINS = [
+    "https://<frontend-prod-cua-ban>",  // (điền khi bạn có domain thật)
+    "http://localhost:5173",            // ví dụ dev server (nếu bạn dùng sau này)
+    // "http://127.0.0.1:5500",         // ví dụ Live Server
+];
+
+app.use(cors({
+    origin(origin, cb) {
+        // Cho phép mở file HTML trực tiếp: Origin có thể là null hoặc không có
+        if (!origin || origin === "null") return cb(null, true);
+        const ok = ALLOWED_ORIGINS.includes(origin);
+        return cb(ok ? null : new Error("Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+}));
+
+app.options("*", cors());
+
+
 app.use(express.json());
 app.use(morgan("tiny"));
 
