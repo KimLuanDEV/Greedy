@@ -34,7 +34,7 @@ app.use(helmet());
 import corsMiddleware from "cors";
 
 const ALLOWED_ORIGINS = [
-    // điền domain thật của bạn tại đây khi có
+    "https://greedy-king.onrender.com",
     "http://localhost:5173",
     "http://127.0.0.1:5500",
     "https://kimluandev.github.io/Greedy/",
