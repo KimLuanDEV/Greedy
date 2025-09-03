@@ -8,12 +8,27 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 // ⚠️ Đổi tên import để tránh trùng
 import { db as fbDb, auth as fbAuth } from "./firebase.js";
+// ở đầu file (cạnh các import khác)
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
+// tính __dirname cho ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// trỏ tới thư mục public
+const publicDir = path.join(__dirname, "..", "public");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// serve file tĩnh (index.html, js, css, ảnh,...)
+app.use(express.static(publicDir, { extensions: ["html"] }));
+
+// Route trang chủ → trả index.html
+app.get("/", (_req, res) => {
+    res.sendFile(path.join(publicDir, "index.html"));
+});
 // ===== Middlewares chung =====
 app.use(helmet());
 import corsMiddleware from "cors";
